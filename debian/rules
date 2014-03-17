@@ -1,0 +1,15 @@
+#!/usr/bin/make -f
+# -*- makefile -*-
+
+
+%:
+	dh $@ --with python2
+
+override_dh_auto_clean:
+	python2 setup.py clean -a
+
+override_dh_auto_build:
+	python2 setup.py build
+
+override_dh_auto_install:
+	python2 setup.py install --root=$(CURDIR)/debian/unity-scope-everpad --install-layout=deb

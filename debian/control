@@ -1,0 +1,30 @@
+Source: unity-scope-everpad
+Section: gnome
+Priority: optional
+Maintainer: SlavikZ <slavikz@pc>
+Build-Depends: debhelper (>= 9),
+               python,
+               python-distutils-extra,
+               python-gi,
+               pkg-config,
+               gir1.2-unity-5.0 (>= 7),
+               gir1.2-dee-1.0 (>= 1.2.5),
+               gir1.2-glib-2.0,
+               everpad,
+Standards-Version: 3.9.4
+
+Package: unity-scope-everpad
+Architecture: all
+Depends: ${misc:Depends},
+         ${python:Depends},
+         python,
+         python-gi,
+         gir1.2-unity-5.0 (>= 7),
+         gir1.2-dee-1.0 (>= 1.2.5),
+         unity-scopes-runner,
+         gir1.2-glib-2.0,
+         everpad,
+Suggests:
+Description: Everpad scope for Unity
+ This package contains the "everpad" scope which allows Unity
+ to search for tomboy content.
