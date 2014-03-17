@@ -1,0 +1,3 @@
+[D-BUS Service]
+Name=com.canonical.Unity.Scope.Notes.Everpad
+Exec=/usr/bin/python /usr/share/unity-scopes/scope-runner-dbus.py -s notes/everpad.scope

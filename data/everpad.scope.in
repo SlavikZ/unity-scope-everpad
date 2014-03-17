@@ -1,0 +1,19 @@
+[Scope]
+DBusName=com.canonical.Unity.Scope.Notes.Everpad
+DBusPath=/com/canonical/unity/scope/notes/everpad
+Icon=/usr/share/icons/unity-icon-theme/places/svg/group-notes.svg
+QueryBinary=
+_Keywords=everpad;note;notes;memo;
+RequiredMetadata=
+OptionalMetadata=tags[s];last_changed[s];
+Loader=/usr/share/unity-scopes/everpad/unity_everpad_daemon.py
+Module=everpad.unity_everpad_daemon
+ModuleType=python
+RemoteContent=false
+Type=notes
+_Name=Everpad
+_Description=This is an Ubuntu search plugin that enables information from Everpad to be searched and displayed in the Dash underneath the Notes header. If you do not wish to search this content source, you can disable this search plugin.
+_SearchHint=Search Everpad notes
+
+[Desktop Entry]
+X-Ubuntu-Gettext-Domain=unity-scope-everpad
