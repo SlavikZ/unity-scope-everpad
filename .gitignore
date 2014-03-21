@@ -124,3 +124,6 @@ local.properties
 # TeXlipse plugin
 .texlipse
 
+#project specific
+debian/files
+debian/unity-scope-everpad*
