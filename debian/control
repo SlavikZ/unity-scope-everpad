@@ -27,4 +27,4 @@ Depends: ${misc:Depends},
 Suggests:
 Description: Everpad scope for Unity
  This package contains the "everpad" scope which allows Unity
- to search for tomboy content.
+ to search for everpad content.

@@ -11,7 +11,7 @@ setup(name='unity-scope-everpad',
       data_files=[
     ('share/dbus-1/services', ['data/unity-scope-everpad.service']),
 #    ('share/icons/unity-icon-theme/places/svg', ['data/icons/service-everpad.svg']),
-    ('share/unity-scopes/everpad', ['src/everpad/unity_everpad_daemon.py']),
-    ('share/unity-scopes/everpad', ['src/everpad/__init__.py']),
+    ('share/unity-scopes/everpadz', ['src/everpadz/unity_everpad_daemon.py']),
+    ('share/unity-scopes/everpadz', ['src/everpadz/__init__.py']),
     ], cmdclass={'build':  build_extra.build_extra,
                  'build_i18n': build_i18n.build_i18n,})
