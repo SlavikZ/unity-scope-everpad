@@ -1,22 +1,24 @@
 [Scope]
 GroupName=com.canonical.Unity.Scope.Home
 UniqueName=/com/canonical/unity/masterscope/everpad
-Icon=
+Icon=/usr/share/unity/icons/lens-nav-everpad.svg
 CategoryIcon=/usr/share/icons/unity-icon-theme/places/svg/group-info.svg
 _Name=Everpad
+_SearchHint=Search Everpad
 Type=everpad
 IsMaster=true
 Keywords=everpad;evernote;
+Shortcut=e
 
 [Desktop Entry]
 X-Ubuntu-Gettext-Domain=unity-scope-home
 
 [Category all_notes]
 _Name=All Notes
-Icon=
+Icon=/usr/share/icons/unity-icon-theme/places/svg/group-info.svg
 DedupField=uri
                          
 [Category pin_notes]
 _Name=Pin Notes
-Icon=
+Icon=/usr/share/icons/unity-icon-theme/places/svg/group-installed.svg
 DedupField=uri

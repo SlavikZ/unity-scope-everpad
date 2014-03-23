@@ -10,9 +10,9 @@ OptionalMetadata=tags[s];last_changed[s];
 Module=everscope.unity_everpad_daemon
 ModuleType=python2
 RemoteContent=false
-Type=notes
+Type=everpad
 _Name=Everpad
-_Description=This is an Ubuntu search plugin that enables information from Everpad to be searched and displayed in the Dash underneath the Notes header. If you do not wish to search this content source, you can disable this search plugin.
+_Description=This is an Ubuntu search plugin that enables information from Everpad to be searched and displayed in the Dash. If you do not wish to search this content source, you can disable this search plugin.
 _SearchHint=Search Everpad notes
 
 [Desktop Entry]
