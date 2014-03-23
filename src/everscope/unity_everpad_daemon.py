@@ -56,8 +56,6 @@ c2 = {'id': 'pin_notes',
 
 CATEGORIES = [c1, c2]
 
-FILTERS = []
-
 m1 = {'id': 'last_changed',
       'type': 's',
       'field': Unity.SchemaFieldType.OPTIONAL}
@@ -97,10 +95,33 @@ class MySearch (Unity.ScopeSearchBase):
                                         '').show()
                 self.last_api_notify = datetime.now()
             return results
-        notebooks = dbus.Array([], signature='i')
-        place = 0
-        #tags = dbus.Array(self.tag_filter_ids, signature='i')
-        tags = dbus.Array([], signature='i')
+
+        #read filters
+        tags_filter = filters.get_filter_by_id('tags')
+        tag_filter_ids = map(lambda tag: int(tag.props.id),
+                             filter(lambda tag: tag.props.active, tags_filter.options))
+        tags = dbus.Array(tag_filter_ids, signature='i')
+
+        notebook_filter = filters.get_filter_by_id('notebooks').get_active_option()
+        if notebook_filter:
+            notebook_filter_id = int(notebook_filter.props.id)
+        else:
+            notebook_filter_id = None
+        if notebook_filter_id:
+            notebooks = [notebook_filter_id]
+        else:
+            notebooks = dbus.Array([], signature='i')
+
+        place_filter = filters.get_filter_by_id('places').get_active_option()
+        if place_filter:
+            place_filter_id = int(place_filter.props.id)
+        else:
+            place_filter_id = None
+        if place_filter_id:
+            place = place_filter_id
+        else:
+            place = 0
+
         for note_struct in everpad_provider.find_notes(search, notebooks, tags,
                                                        place, 1000, Note.ORDER_TITLE, -1,
                                                        ):
@@ -123,7 +144,7 @@ class MySearch (Unity.ScopeSearchBase):
         """
         try:
             result_set = self.search_context.result_set
-            for i in self.search(self.search_context.search_query,self.search_context.filter_state):
+            for i in self.search(self.search_context.search_query, self.search_context.filter_state):
                 if not 'uri' in i or not i['uri'] or i['uri'] == '':
                     continue
                 if not 'icon' in i or not i['icon'] or i['icon'] == '':
@@ -203,13 +224,30 @@ class Scope (Unity.AbstractScope):
         return cs
 
     def do_get_filters(self):
-        '''
+        """
         Adds filters
-        '''
-        fs = Unity.FilterSet.new ()
-        #        if FILTERS:
-        #
-        return fs
+        """
+        filters = Unity.FilterSet.new()
+        filter_icon = Gio.ThemedIcon.new(SVG_DIR+'group-recent.svg')
+
+        tags_filter = Unity.CheckOptionFilter.new('tags', _('Tags'), filter_icon, True)
+        for tag_struct in everpad_provider.list_tags():
+            tag = Tag.from_tuple(tag_struct)
+            tags_filter.add_option(str(tag.id), tag.name, filter_icon)
+        filters.add(tags_filter)
+
+        notebooks_filter = Unity.RadioOptionFilter.new('notebooks', _('Notebooks'), filter_icon, True)
+        for notebook_struct in everpad_provider.list_notebooks():
+            notebook = Notebook.from_tuple(notebook_struct)
+            notebooks_filter.add_option(str(notebook.id), notebook.name, filter_icon)
+        filters.add(notebooks_filter)
+
+        places_filter = Unity.RadioOptionFilter.new('places', _('Places'), filter_icon, True)
+        for place_struct in everpad_provider.list_places():
+            place = Place.from_tuple(place_struct)
+            places_filter.add_option(str(place.id), place.name, filter_icon)
+        filters.add(places_filter)
+        return filters
 
     def do_get_group_name(self):
         return GROUP_NAME
