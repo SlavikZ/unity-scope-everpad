@@ -35,12 +35,10 @@ _ = gettext.gettext
 
 GROUP_NAME = 'com.canonical.Unity.Scope.Everpad'
 UNIQUE_PATH = '/com/canonical/unity/scope/everpad'
-SEARCH_URI = ''
 SEARCH_HINT = _('Search Everpad notes')
 NO_RESULTS_HINT = _('Sorry, there are no Everpad notes that match your search.')
 PROVIDER_CREDITS = _('Powered by Everpad and Evernote')
 SVG_DIR = '/usr/share/icons/unity-icon-theme/places/svg/'
-PROVIDER_ICON = SVG_DIR+'service-everpad.svg'
 DEFAULT_RESULT_ICON = 'everpad'
 DEFAULT_RESULT_MIMETYPE = 'application/x-desktop'
 DEFAULT_RESULT_TYPE = Unity.ResultType.PERSONAL
@@ -51,7 +49,7 @@ c1 = {'id': 'all_notes',
       'renderer': Unity.CategoryRenderer.HORIZONTAL_TILE}
 c2 = {'id': 'pin_notes',
       'name':_('Pin Notes'),
-      'icon':SVG_DIR+'group-notes.svg',
+      'icon':SVG_DIR+'group-installed.svg',
       'renderer': Unity.CategoryRenderer.HORIZONTAL_TILE}
 
 CATEGORIES = [c1, c2]
@@ -74,9 +72,9 @@ class MySearch (Unity.ScopeSearchBase):
     def __init__(self, search_context):
         super(MySearch, self).__init__()
         self.set_search_context(search_context)
+        #TODO read indexes from CATEGORIES array
         self.all_notes = 0
         self.pin_notes = 1
-
 
     def search(self, search, filters):
         results = []
@@ -171,8 +169,6 @@ class Preview (Unity.ResultPreviewer):
     def do_run(self):
         obj = json.loads(self.result.uri)
         note_id = obj['id']
-        #note = Note.from_tuple(everpad_provider.get_note(obj['id']))
-        #preview = Unity.GenericPreview.new(note.title, html2text(note.content), None,)
         preview = Unity.GenericPreview.new(self.result.title, self.result.comment.strip(), None)
         image = None
         for _res in everpad_provider.get_note_resources(note_id):
