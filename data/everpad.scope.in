@@ -1,24 +1,20 @@
 [Scope]
-GroupName=com.canonical.Unity.Scope.Home
-UniqueName=/com/canonical/unity/masterscope/everpad
+GroupName=com.canonical.Unity.Scope.Everpad
+UniqueName=/com/canonical/unity/scope/everpad
 Icon=/usr/share/unity/icons/lens-nav-everpad.svg
 CategoryIcon=/usr/share/icons/unity-icon-theme/places/svg/group-info.svg
 _Name=Everpad
-_SearchHint=Search Everpad
 Type=everpad
 IsMaster=true
 Keywords=everpad;evernote;
 Shortcut=e
+RequiredMetadata=
+OptionalMetadata=tags[s];last_changed[s];
+Module=everscope.unity_everpad_daemon
+ModuleType=python2
+RemoteContent=false
+_SearchHint=Search Everpad
+_Description=This is an Ubuntu search plugin that enables information from Everpad to be searched and displayed in the Dash. If you do not wish to search this content source, you can disable this search plugin.
 
 [Desktop Entry]
-X-Ubuntu-Gettext-Domain=unity-scope-home
-
-[Category all_notes]
-_Name=All Notes
-Icon=/usr/share/icons/unity-icon-theme/places/svg/group-info.svg
-DedupField=uri
-                         
-[Category pin_notes]
-_Name=Pin Notes
-Icon=/usr/share/icons/unity-icon-theme/places/svg/group-installed.svg
-DedupField=uri
+X-Ubuntu-Gettext-Domain=unity-scope-everpad
