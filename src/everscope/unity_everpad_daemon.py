@@ -56,13 +56,16 @@ c2 = {'id': 'pin_notes',
 
 CATEGORIES = [c1, c2]
 
+m0 = {'id': 'created',
+      'type': 's',
+      'field': Unity.SchemaFieldType.OPTIONAL}
 m1 = {'id': 'last_changed',
       'type': 's',
       'field': Unity.SchemaFieldType.OPTIONAL}
 m2 = {'id': 'tags',
       'type': 's',
       'field': Unity.SchemaFieldType.OPTIONAL}
-EXTRA_METADATA = [m1, m2]
+EXTRA_METADATA = [m0, m1, m2]
 
 #dbus.mainloop.glib.DBusGMainLoop(set_as_default=True)
 everpad_provider = get_provider()
@@ -77,6 +80,15 @@ class MySearch (Unity.ScopeSearchBase):
         #TODO read indexes from CATEGORIES array
         self.all_notes = 0
         self.pin_notes = 1
+
+    def extract_content(self, note_content):
+        """
+        Extract sample note content for preview
+        """
+        extracted_content = html2text(note_content)
+        if extracted_content:
+            extracted_content = extracted_content.replace('&nbsp_place_holder;', ' ').strip()[:400]
+        return extracted_content
 
     def search(self, search, filters):
         results = []
@@ -126,13 +138,15 @@ class MySearch (Unity.ScopeSearchBase):
                                                        place, 1000, Note.ORDER_TITLE, -1,
                                                        ):
             note = Note.from_tuple(note_struct)
-            last_changed = datetime.datetime.fromtimestamp(note.updated/1000).strftime('%x')
+            created = datetime.datetime.fromtimestamp(note.created/1000).strftime('%c')
+            last_changed = datetime.datetime.fromtimestamp(note.updated/1000).strftime('%c')
             note_tags = ','.join(note.tags)
             note_uri = json.dumps({'id': note.id, 'search': search})
             results.append({'uri': note_uri,
                             'title': note.title,
-                            'comment': html2text(note.content),
+                            'comment': self.extract_content(note.content),
                             'category': self.pin_notes if note.pinnded else self.all_notes,
+                            'created': GLib.Variant('s', created),
                             'last_changed': GLib.Variant('s', last_changed),
                             'tags': GLib.Variant('s', note_tags)
                             })
@@ -179,8 +193,16 @@ class Preview (Unity.ResultPreviewer):
                 image = 'file://%s' % res.file_path
         if image:
             preview.props.image_source_uri = image
-        if self.result.metadata and 'last_changed' in self.result.metadata and self.result.metadata['last_changed'].get_string() != '':
-            preview.props.subtitle = self.result.metadata['last_changed'].get_string()
+        if self.result.metadata:
+            if 'created' in self.result.metadata and self.result.metadata['created'].get_string() != '':
+                preview.add_info(Unity.InfoHint.new("created", _("Created"), None,
+                                                    self.result.metadata['created'].get_string()))
+            if 'last_changed' in self.result.metadata and self.result.metadata['last_changed'].get_string() != '':
+                preview.add_info(Unity.InfoHint.new("last_changed", _("Changed"), None,
+                                                    self.result.metadata['last_changed'].get_string()))
+            if 'tags' in self.result.metadata and self.result.metadata['tags'].get_string() != '':
+                preview.add_info(Unity.InfoHint.new("tags", _("Tags"), None,
+                                                    self.result.metadata['tags'].get_string()))
         view_action = Unity.PreviewAction.new("view", _("Edit"), None)
         preview.add_action(view_action)
         #edit = Unity.PreviewAction.new("edit", "Edit", None)
