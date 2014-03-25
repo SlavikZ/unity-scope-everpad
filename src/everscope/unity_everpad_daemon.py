@@ -21,6 +21,7 @@ import datetime
 import dbus
 import dbus.mainloop.glib
 import json
+import locale
 from html2text import html2text
 from everpad.tools import get_provider, get_pad
 from everpad.basetypes import Note, Tag, Notebook, Place, Resource
@@ -29,6 +30,7 @@ from everpad.const import API_VERSION
 
 APP_NAME = 'unity-scope-everpad'
 LOCAL_PATH = '/usr/share/locale/'
+locale.setlocale(locale.LC_ALL, '')
 gettext.bindtextdomain(APP_NAME, LOCAL_PATH)
 gettext.textdomain(APP_NAME)
 _ = gettext.gettext
