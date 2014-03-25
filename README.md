@@ -17,7 +17,7 @@ Install deb package:
   cd ..
   sudo dpkg -i unity-scope-everpad_0.0.1_all.deb
 ```
-(Optional) Add everpad scope to master scope list (you may also use dconf-editor GUI tools):
+(Optional) Add everpad scope to master scope list (you may also use dconf-editor GUI tool):
 ```
 dconf write /com/canonical/unity/dash/scopes "['home.scope', 'applications.scope', 'files.scope', 'video.scope', 'music.scope', 'photos.scope', 'social.scope', 'everpad.scope']"
 ```
