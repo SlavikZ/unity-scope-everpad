@@ -5,7 +5,6 @@ Icon=/usr/share/unity/icons/lens-nav-everpad.svg
 CategoryIcon=/usr/share/icons/unity-icon-theme/places/svg/group-info.svg
 _Name=Everpad
 Type=everpad
-IsMaster=true
 Keywords=everpad;evernote;
 Shortcut=e
 RequiredMetadata=
